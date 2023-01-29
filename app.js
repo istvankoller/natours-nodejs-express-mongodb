@@ -7,9 +7,13 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 // 1) MIDDLEWARES
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  //only in development mode (not in production mode)
+  app.use(morgan('dev'));
+}
 
 app.use(express.json()); //middleware, to read data from body into req.body
+//app.use(express.static(`${__dirname}/public`)); //middleware, to serve static files
 
 app.use((req, res, next) => {
   console.log('Hello from the middleware 👋');
@@ -25,8 +29,4 @@ app.use((req, res, next) => {
 app.use('/api/v1/tours', tourRouter); //create sub-application
 app.use('/api/v1/users', userRouter);
 
-// 4) START SERVER
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
-});
+module.exports = app;
