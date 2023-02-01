@@ -86,6 +86,7 @@ exports.updateTour = async (req, res) => {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true, //validators are defined in the model
+      //lefut a validator, ha nem jó, akkor nem frissíti a db-t
     });
 
     res.status(200).json({
