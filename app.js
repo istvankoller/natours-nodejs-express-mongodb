@@ -24,6 +24,7 @@ app.use(express.json()); //middleware, to read data from body into req.body
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  // console.log(req.headers);
   next();
 });
 
