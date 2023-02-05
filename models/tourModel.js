@@ -150,6 +150,13 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
+//virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review', //referencia a másik modelre
+  foreignField: 'tour', //foreignField: a másik modelben a kapcsolódó mező
+  localField: '_id', //localField: a jelenlegi modelben a kapcsolódó mező
+});
+
 // Query middleware
 // this keyword points to the current query
 // csak bizonyos query-kre működik pl vip vendégeknek

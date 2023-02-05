@@ -33,10 +33,15 @@ const reviewSchema = new mongoose.Schema(
 );
 
 reviewSchema.pre(/^find/, function (next) {
+  // this.populate({
+  //   path: 'tour', //referenced model to populate
+  //   select: 'name', //name will be shown in the response
+  // }).populate({
+  //   path: 'user',
+  //   select: 'name photo', //name and photo will be shown in the response
+  // });
+
   this.populate({
-    path: 'tour', //referenced model to populate
-    select: 'name', //name will be shown in the response
-  }).populate({
     path: 'user',
     select: 'name photo', //name and photo will be shown in the response
   });
@@ -47,3 +52,8 @@ reviewSchema.pre(/^find/, function (next) {
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
+
+// nested routes
+// POST /tour/234fad4/reviews access to tour id
+// GET /tour/234fad4/reviews
+// GET /tour/234fad4/reviews/9098fad
