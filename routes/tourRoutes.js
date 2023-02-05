@@ -1,11 +1,17 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
 const authController = require('../controllers/authController');
-const reviewController = require('../controllers/reviewController');
+const reviewRouter = require('./reviewRoutes');
 
 // const { getAllTours, createTour, getTour, updateTour, deleteTour } = require('./../controllers/tourController');
 // ilyenkor nem kell tourController.getAllTours, hanem csak getAllTours
 const router = express.Router();
+
+// nested routes
+// POST /tour/234fad4/reviews access to tour id
+// GET /tour/234fad4/reviews
+
+router.use('/:tourId/reviews', reviewRouter); // ez a reviewRouter a reviewRoutes.js-ben van
 
 // router.param('id', tourController.checkID);
 
@@ -29,14 +35,6 @@ router
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour
-  );
-
-router
-  .route('/:tourId/reviews')
-  .post(
-    authController.protect,
-    authController.restrictTo('user'),
-    reviewController.createReview
   );
 
 module.exports = router;
