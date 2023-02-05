@@ -22,9 +22,7 @@ mongoose
   });
 
 // READ JSON FILE
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
-);
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 // IMPORT DATA INTO DB
 const importData = async () => {
@@ -59,3 +57,4 @@ console.log(process.argv);
 // database upload:
 // node dev-data/data/import-dev-data.js --import
 // node dev-data/data/import-dev-data.js --delete
+// ki kell tallózni az adott fájlt majd node-t kell futtatni a fájl nevével és a parancssorban megadott parancsokkal
