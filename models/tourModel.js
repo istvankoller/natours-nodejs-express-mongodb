@@ -161,11 +161,14 @@ tourSchema.pre(/^find/, function (next) {
   next();
 }); //find, findOne, findOneAndDelete, findOneAndUpdate
 
-// tourSchema.post(/^find/, function (docs, next) {
-//   //post middleware
-//   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-//   next();
-// });
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    //populate: egy másik modelből adatokat hozzáad a response-hoz
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
+  next();
+});
 
 // Aggregation middleware
 // this keyword points to the current aggregation object
@@ -176,6 +179,12 @@ tourSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
   console.log(this.pipeline());
+  next();
+});
+
+tourSchema.post(/^find/, function (docs, next) {
+  //post middleware
+  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
   next();
 });
 
